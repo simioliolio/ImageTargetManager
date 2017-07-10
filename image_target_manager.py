@@ -111,11 +111,6 @@ def add_target_to_cloud_database(access_key, secret_key, absoluteImagePath):
         'Date': date
     }
 
-
-    # url = FULL_TARGET_MANAGEMENT_API_ENDPOINT + path
-    # r = requests.post(url, data=request_body, headers=request_headers)
-    # return r.status_code, r.content
-
     # Make the request over HTTPS on port 443
     http = httplib.HTTPSConnection(TARGET_MANAGEMENT_API_ENDPOINT, 443)
     http.request(http_method, path, request_body, request_headers)
@@ -132,19 +127,9 @@ if __name__ == '__main__':
     parser.add_argument('--access-key', required=True, type=str, help='The access key for the Cloud database')
     parser.add_argument('--secret-key', required=True, type=str, help='The secret key for the Cloud database')
     parser.add_argument('--mode', required=True, choices=['delete-all', 'add-folder'], type=str, help='The mode, either "delete-all", or "add-folder".')
-    # parser.add_argument('--max-num-results', required=False, type=int,
-    #                     default=10, help='The maximum number of matched targets to be returned')
-    # parser.add_argument('--include-target-data', type=str, required=False,
-    #                     default='top', choices=['top', 'none', 'all'],
-    #                     help='Specified for which results the target metadata is included in the response')
     parser.add_argument('path', nargs=1, type=str, help='Path containing .jpg files')
     args = parser.parse_args()
 
-    # status, query_response = send_target_query(access_key=args.access_key,
-    #                          secret_key=args.secret_key,
-    #                          max_num_results=str(args.max_num_results),
-    #                          include_target_data=args.include_target_data,
-    #                          image=args.image[0])
     print(args.mode)
     if args.mode == 'delete-all':
         # get all targets
@@ -196,14 +181,3 @@ if __name__ == '__main__':
                 print("error uploading " + filename + ". status: " + status + " response: " + query_response)
                 continue
 
-
-    # status, query_response = add_target_to_cloud_database(access_key=args.access_key,
-    #     secret_key=args.secret_key, 
-    #     absoluteImagePath=args.image[0])
-    # if status == 200:
-    #     print query_response
-    #     sys.exit(0)
-    # else:
-    #     print status
-    #     print query_response
-    #     sys.exit(status)
